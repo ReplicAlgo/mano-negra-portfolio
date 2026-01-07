@@ -96,7 +96,6 @@ if not filtered_df.empty:
         "Year": yearly_returns['year'].astype(int),
         "Return": yearly_returns['weighted_pl']
     })
-    yearly_df["Return"] = yearly_df["Return"].apply(lambda x: f"${x:,.0f}")
     
     dates = filtered_df['time'].values
 else:
@@ -132,13 +131,13 @@ with col2:
         unsafe_allow_html=True
     )
 
-# --- Equity Curve & Drawdown (tighter spacing) ---
+# --- Equity Curve & Drawdown ---
 fig = make_subplots(
     rows=2, cols=1,
     shared_xaxes=True,
-    vertical_spacing=0.02,        # <<< Much smaller gap between the two charts
+    vertical_spacing=0.02,
     subplot_titles=("Equity Curve", "Drawdown"),
-    row_heights=[0.65, 0.35]       # Slightly more space for equity, less for drawdown
+    row_heights=[0.65, 0.35]
 )
 
 if len(cum_equity) > 0:
@@ -154,7 +153,6 @@ if len(cum_equity) > 0:
                              fillcolor="rgba(255,0,0,0.3)"),
                   row=2, col=1)
 
-# Main layout
 fig.update_layout(
     height=650,
     showlegend=True,
@@ -163,7 +161,6 @@ fig.update_layout(
     title_text=""
 )
 
-# Range selector buttons at the top
 fig.update_xaxes(
     rangeselector=dict(
         buttons=list([
@@ -181,9 +178,18 @@ fig.update_xaxes(
 
 st.plotly_chart(fig, use_container_width=True)
 
-# --- Yearly Returns Table ---
+# --- Yearly Returns Table with Conditional Formatting ---
 st.subheader("Yearly Returns")
 if not yearly_df.empty:
-    st.table(yearly_df)
+    # Function to color negative numbers red
+    def color_negative_red(val):
+        color = 'red' if val < 0 else 'black'
+        return f'color: {color}'
+
+    # Apply styling: format as currency and apply the color function
+    styled_yearly_df = yearly_df.style.applymap(color_negative_red, subset=['Return'])\
+                                     .format({"Return": "${:,.0f}", "Year": "{:d}"})
+    
+    st.table(styled_yearly_df)
 else:
     st.write("No data available for the selected parameters.")

@@ -36,19 +36,22 @@ sp500_index = instruments.index("S&P500")
 # --- Branding ---
 st.image("IndicadorManoNegraBrand.png", width=900)
 
-# New Text with Border and Sidebar-sized font
+# Texto descriptivo con borde y fuente tamaño sidebar
 st.markdown(
     """
-    <div style='
-        border: 2px solid #ccc; 
-        border-radius: 8px; 
-        padding: 10px; 
-        text-align: center; 
-        margin: 10px 0px;
-        font-size: 16px;
-        font-weight: 500;
-        color: #31333F;'>
-        Insert Your New Text Here
+    <div style='border:2px solid #ccc; border-radius:8px; padding:20px; margin-bottom:20px; font-size:16px; line-height:1.6;'>
+        <strong style='font-size:18px;'>Uso:</strong><br>
+        Esta app está diseñada para simular portafolios combinando diferentes instrumentos financieros. El objetivo principal es combinar activos con baja correlación para mejorar el perfil riesgo-retorno. Según tu prioridad, puedes enfocarte en:
+        <ul>
+            <li>Maximizar el retorno esperado.</li>
+            <li>Minimizar el Max Drawdown (pérdida máxima).</li>
+            <li><strong>Lo ideal:</strong> aumentar el retorno y reducir el riesgo, o aceptar un menor retorno si el riesgo baja en mayor proporción.</li>
+        </ul>
+        <strong style='font-size:18px;'>Inputs:</strong>
+        <ul>
+            <li><strong>Select Trading Hours:</strong> ajusta las horas de trading según el horario en que planeas invertir.</li>
+            <li><strong>Asset Allocation:</strong> los sliders indican el porcentaje (%) asignado a cada activo.</li>
+        </ul>
     </div>
     """, 
     unsafe_allow_html=True

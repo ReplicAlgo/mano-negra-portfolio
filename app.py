@@ -35,7 +35,26 @@ sp500_index = instruments.index("S&P500")
 
 # --- Branding ---
 st.image("IndicadorManoNegraBrand.png", width=900)
-st.markdown("<h2 style='text-align: center; margin-top:30px;'>Mano Negra Portfolio Simulation</h2>", unsafe_allow_html=True)
+
+# New Text with Border and Sidebar-sized font
+st.markdown(
+    """
+    <div style='
+        border: 2px solid #ccc; 
+        border-radius: 8px; 
+        padding: 10px; 
+        text-align: center; 
+        margin: 10px 0px;
+        font-size: 16px;
+        font-weight: 500;
+        color: #31333F;'>
+        Insert Your New Text Here
+    </div>
+    """, 
+    unsafe_allow_html=True
+)
+
+st.markdown("<h2 style='text-align: center; margin-top:10px;'>Mano Negra Portfolio Simulation</h2>", unsafe_allow_html=True)
 
 # --- Sidebar: Portfolio Settings ---
 st.sidebar.header("Portfolio Settings")

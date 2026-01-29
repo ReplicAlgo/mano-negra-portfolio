@@ -203,13 +203,18 @@ st.plotly_chart(fig, use_container_width=True)
 # --- Yearly Returns Table with Conditional Formatting ---
 st.subheader("Yearly Returns")
 if not yearly_df.empty:
-    # Function to color negative numbers red
-    def color_negative_red(val):
-        color = 'red' if val < 0 else 'black'
-        return f'color: {color}'
+    # Función para dar color: verde si es positivo, rojo si es negativo
+    def color_returns(val):
+        if val < 0:
+            return 'color: #ff4b4b;' # Un rojo vibrante que resalta en ambos modos
+        elif val > 0:
+            return 'color: #00ce2c;' # Un verde brillante (esmeralda) visible en fondo oscuro y claro
+        else:
+            return '' # Color por defecto para el cero
 
-    # Apply styling: format as currency and apply the color function
-    styled_yearly_df = yearly_df.style.applymap(color_negative_red, subset=['Return'])\
+    # Aplicar el estilo
+    # Nota: Usamos map en lugar de applymap (que está siendo depreciado en versiones nuevas de pandas)
+    styled_yearly_df = yearly_df.style.map(color_returns, subset=['Return'])\
                                      .format({"Return": "${:,.0f}", "Year": "{:d}"})
     
     st.table(styled_yearly_df)
